@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>添加游戏</title>
+    <link rel="stylesheet" href="/static/admin/css/reset.css"/>
+    <link rel="stylesheet" href="/static/admin/css/common.css"/>
+    <!--引入CSS-->
+    <link rel="stylesheet" type="text/css" href="/static/admin/webuploader/webuploader.css">
+    <link rel="stylesheet" href="/static/admin/css/datacenter.css"/>
+    <style>
+        /*#filePicker div:first-child{width:100%!important;height:100%!important;}*/
+        .screenshotlist>div,
+        .gameiconlist>div,
+        .gamebglist>div {
+            float: left;
+            margin-right: 24px;
+            position: relative;
+        }
+        .screenshotlist>div>img:last-of-type,
+        .gameiconlist>div>img:last-of-type,
+        .gamebglist>div>img:last-of-type {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<div class="tqOA">
+
+    <!--内容主体区域-------开始-->
+    <div class="tq-body fl clearfix">
+        <ul id="datanavbar">
+            <li>主页</li>
+            <li class="now">添加游戏&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <!--<li class="now" style="display: none">批量上传&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>-->
+        </ul>
+        <!--充值数据---------开始-->
+        <div class="rechargedata" id="rechargedata">
+            <ul>
+                <li class="bline"><span>添加游戏</span></li>
+                <li><span>批量上传</span></li>
+            </ul>
+
+            <!--C币发放---------开始-->
+            <div class="ccoinprovide addgame" id="ccoinprovide">
+                <form action="{:url('games/add')}" method="POST" enctype="multipart/form-data" id="form">
+                    <div class="bigbox">
+                        <span><b>游戏名称</b><input id="gamename" required="required"  type="text" name="name" value=""/><span></span></span><br>
+                        <span><b>安卓游戏包链接</b><input required="required" type="text" name="device_android_url" value="" /></span><br>
+                        <span><b>ios游戏包链接</b><input required="required" type="text" name="device_ios_url" value="" /></span><br>
+                        <span><b>IOS页面url</b><input required="required" type="text" name="ios_page_url" value="" /></span><br>
+                        <span><b>Android包名</b><input id="androidname" required="required" type="text" name="android_mac_id" /><span></span></span><br>
+                        <span><b>IOS包名</b><input id="iosname" required="required" type="text" name="ios_mac_id" /><span></span></span><br>
+                        <span><b>bundle ID</b><input required="required" placeholder="4c.test.ios.game" type="text" name="ios_bundle_id" /></span><br>
+                        <span class="gameclassify">
+                            <b>游戏分类</b>
+                            <select name="parent_cate" id="parent_cate" >
+                                <option value="" id="tips">一级分类</option>
+                                {foreach $topCategoryLists as $topCategoryList}
+                                <option value="{$topCategoryList.id}">{$topCategoryList.cate_name}</option>
+                                {/foreach}
+                            </select>
+                            <select name="child_cate" id="child_cate">
+                                <option value="">请选择一级分类</option>
+                            </select>
+                        </span>
+                        <br>
+                        <span><b>游戏标签</b><input required="required" type="text" name="tags"/><i>多个使用','号隔开</i></span>
+                        <br>
+                        <span><b>一句话描述</b><input required="required" type="text" placeholder="3D仙侠游戏，下载送神秘坐骑" name="advertisement" /><i>30字以内</i></span><br>
+                        <span class="gamedescribe">
+                            <b>游戏描述</b>
+                            <textarea id="" cols="30" rows="10" name="introduction"></textarea>
+                        </span>
+                        <br>
+                        <span><b>ios包大小</b><input required="required" type="text" name="ios_size"/><i>*数字+单位(K,M,G),例:99M</i></span><br>
+                        <span><b>Android包大小</b><input required="required" type="text" name="android_size"/><i>*数字+单位(K,M,G),例:99M</i></span><br>
+                        <span><b>ios游戏版本</b><input required="required" type="text" name="ios_version"/><i></i></span><br>
+                        <span><b>Android游戏版本</b><input required="required" type="text" name="android_version"/><i></i></span><br>
+                        <span class="screenshot">
+                            <b>游戏截图</b>
+                            <div id="filePicker">选择文件</div>
+                        </span>
+                        <br>
+                        <div class="screenshotlist" id="fileList">
+                            <div class="flag">
+                                <i>图片尺寸<br>480*800</i>
+                                <!--<img src="/static/admin/img/close_icon.png" alt=""/>-->
+                            </div>
+                        </div>
+                        <span class="gameicon">
+                            <b>游戏ICON</b>
+                            <div id="filePicker1">选择文件</div>
+                        </span>
+                        <br>
+                        <div class="gameiconlist" id="fileList1">
+                            <div class="flag">
+                                <!--<i>图片尺寸<br>512*512</i>-->
+                                <!--<img src="/static/admin/img/close_icon.png" alt=""/>-->
+                            </div>
+                        </div>
+                        <span class="gamebg">
+                            <b>游戏背景图</b>
+                            <div id="filePicker2">选择文件</div>
+                        </span>
+                        <br>
+                        <div class="gamebglist" id="fileList2">
+                            <div class="flag">
+                                <!--<i>图片尺寸<br>512*512</i>-->
+                                <!--<img src="/static/admin/img/close_icon.png" alt=""/>-->
+                            </div>
+                        </div>
+                        <span><b>排序</b><input required="required" type="text" value="" name="sort"/><i>数字值越大,排序靠前</i></span><br>
+                        <span><b>评分</b><input required="required" type="text" value="" name="score"/><i>0-10分</i></span><br>
+                        <span><b>下载次数</b><input required="required" placeholder="不填写默认次数为0" type="text" value="" name="download"/></span><br>
+                        <span><b>上线时间</b><input type="date" value="" name="pushTime" /></span><br>
+                        <span class="chose">
+                            <b>是否精选</b>
+                            {foreach $tagsStatusLists as $tagsStatusList}
+                            <input name="is_select" type="radio" value="{$tagsStatusList.id}"/>
+                            <i>{$tagsStatusList.tag_name}</i>
+                            {/foreach}
+                        </span>
+                        <br>
+                        <span class="chose">
+                            <b>是否加入首页</b>
+                            {foreach $menus as $menu}
+                            <input name="is_menu" type="radio" value="{$menu.id}"/>
+                            <i>{$menu.menu_name}</i>
+                            {/foreach}
+                            <input name="is_menu" type="radio" value=""/>
+                            <i>否</i>
+                        </span>
+                        <br> 
+                        <span>
+                            <b>是否最新/最热</b>
+                            {foreach $hot_news as $hot_new}
+                            <input name="hot_new" type="radio" value="{$hot_new.id}"/>
+                            <i>{$hot_new.tag_name}</i>
+                            {/foreach}
+                            <input name="hot_new" type="radio" value=""/>
+                            <i>否</i>
+                        </span>
+                    </div>
+                    <input name="extend_pic" type="hidden" id="game_screenshot" value=""/>
+                    <input name="icon" type="hidden" id="icon" value=""/>
+                    <input name="backgroup" type="hidden" id="backgroup" value=""/>
+                    <p><input type="submit" value="保存" class="add"/><input type="reset" value="重置"/></p>
+                </form>
+            </div>
+            <!--C币发放---------end-->
+            <input type="hidden" id="refreshed" value="no">
+        </div>
+        <!--充值数据---------end-->
+    </div>
+    <!--内容主体区域-------endd-->
+    <script type="text/javascript" src="/static/admin/jq/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/admin/webuploader/webuploader.js"></script>
+    <script type="text/javascript" src="/static/lib/uploader.js"></script>
+</div>
+</body>
+<script>
+
+    
+    $("#parent_cate").change(function(){
+        var id=$("#parent_cate").val();
+        $.get("{:url('games/getSceondCategory')}",{'id':id},function(jsonString){
+            var secondCategory = JSON.parse(jsonString);
+            // console.log(secondCategory);
+            $("#child_cate option").remove();
+            for(var i=0; i<secondCategory.length; i++){
+                // console.log(secondCategory[i]['id']);
+                $("#child_cate").append("<option value='"+secondCategory[i]['id']+"'>"+secondCategory[i]['cate_name']+"</option>");
+            }
+        })
+    });
+
+    var id=$("#parent_cate").val();
+    if (id != '') {
+        $.get("{:url('games/getSceondCategory')}",{'id':id},function(jsonString){
+            var secondCategory = JSON.parse(jsonString);
+            // console.log(secondCategory);
+            $("#child_cate option").remove(); 
+            for(var i=0; i<secondCategory.length; i++){
+                // console.log(secondCategory[i]['id']);
+                $("#child_cate").append("<option value='"+secondCategory[i]['id']+"'>"+secondCategory[i]['cate_name']+"</option>");
+            }
+        })
+    }
+
+//游戏截图
+    var uploader3 = new $.uploader({pick:'#filePicker',fileList:'#fileList',itemList:'#game_screenshot',pic_width:'480',pic_height:'720'})
+                  .setToken("{$token}").dataToken("{$uploadToken}")
+                  .getInstance();         
+//添加游戏----->游戏icom
+    var uploader1 = new $.uploader({pick:'#filePicker1',fileList:'#fileList1',itemList:'#icon',pic_width:'512',pic_height:'512'})
+                .setToken("{$token}").dataToken("{$uploadToken}")
+                .getInstance();
+//添加游戏----->游戏背景图
+    var uploader2 = new $.uploader({pick:'#filePicker2',fileList:'#fileList2',itemList:'#backgroup',pic_width:'750',pic_height:'414'})
+                  .setToken("{$token}").dataToken("{$uploadToken}")
+                  .getInstance();
+
+    //游戏名称验证
+    function gamename_yz() {
+        var reg = /^[a-zA-Z\u4E00-\u9FA5]{1,18}$/; //正则表达式 必须以字母开头的账号
+        if ($("#gamename").val().search(reg) == -1) {
+            $("#gamename").next().html("18位以内汉字组合").css('color','red');
+            /*alert("密码只能是6-9位数字");*/
+            return false;
+        } else {
+            $("#gamename").next().html("账号验证成功").css('color','green');
+            /*  alert("验证成功");*/
+            return true;
+        }
+        return true;
+    }
+
+
+//
+    $("#gamename").blur(gamename_yz);
+
+    function setName() {
+        let $self = $(this);
+        var reg = /^[a-zA-Z\u4E00-\u9FA5]{1,18}$/; //正则表达式 必须以字母开头的账号
+        if ($self.val().search(reg) == -1) {
+            $self.next().html("18位以内汉字字母组合").css('color','red');
+//            alert("密码只能是6-9位数字");
+            return false;
+        } else {
+            $self.next().html("账号验证成功").css('color','green');
+//            alert("验证成功");
+            return true;
+        }
+        return true;
+    }
+
+    $("#gamename").blur(setName);
+    $("#androidname").blur(setName);
+    $("#iosname").blur(setName);
+
+
+
+    $("#parent_cate").change(function(){
+        $("#tips").hide();
+    });
+
+
+</script>
+
+</html>

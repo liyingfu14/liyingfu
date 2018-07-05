@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>添加管理员</title>
+    <link rel="stylesheet" href="/static/admin/css/reset.css"/>
+    <link rel="stylesheet" href="/static/admin/css/common.css"/>
+    <link rel="stylesheet" href="/static/admin/css/setup.css"/>
+</head>
+<body>
+<div class="tqOA">
+    <!--内容主体区域-------开始-->
+    <div class="tq-body fl clearfix">
+        <ul id="setnavbar">
+            <li>主页</li>
+            <li class="now">编辑管理员&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+        </ul>
+
+        <!--添加管理员---------开始-->
+        <div class="addgift" id="addmanager">
+            <form action="{:url('admin/Setup/update')}" method="POST">
+                        <input type="hidden" name="id" value="{$edits.id}">
+                        <span>
+                            <b>用户名</b>
+                            <input type="text" id="user_name" placeholder="请输入用户名" name="username" value="{$edits.username}"/>
+                        </span>
+                <br>
+                        <span>
+                            <b>密码</b>
+                            <input type="password" id="password" placeholder="请输入密码"/>
+                        </span>
+                <br>
+                        <span>
+                            <b>联系人</b>
+                            <input type="text" id="name" name="real_name" value="{$edits.real_name}"/>
+                        </span>
+                <br>
+                        <span>
+                            <b>电话</b>
+                            <input type="text" id="mobile" name="mobile" value="{$edits.mobile}"/>
+                        </span>
+                <br>
+                        <span>
+                            <b>QQ</b>
+                            <input type="text" id="qq" name="qq" value="{$edits.qq}"/>
+                        </span>
+                <br>
+                        <span class="role">
+                            <b>角色</b>
+                            <select class="roleid" name="role_id">
+                                {foreach $roleList as $key => $role}
+                                {if condition="$edits.role_id==$key"}
+                                <option value="{$key}" selected="selected">{$role}</option>
+                                {else /}
+                                <option value="{$key}">{$role}</option>
+                                {/if}
+                                {/foreach}
+                            </select>
+                        </span>
+                <br>
+                        <span class="role">
+                            <b>用户状态</b>
+                            <select class="roleid" name="user_state">
+                                {foreach $states as $key => $state}
+                                {if condition="$edits.user_state==$key"}
+                                <option value="{$key}" selected="selected">{$state}</option>
+                                {else /}
+                                <option value="{$key}">{$state}</option>
+                                {/if}
+                                {/foreach}
+                            </select>
+                        </span>
+                <p>
+                    <input type="submit" id="add" value="编辑" class="on">
+                    <input type="reset" value="取消"/>
+                </p>
+            </form>
+        </div>
+        <!--添加管理员---------end-->
+
+    </div>
+    <!--内容主体区域-------end-->
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>编辑游戏</title>
+    <link rel="stylesheet" href="/static/admin/css/reset.css"/>
+    <link rel="stylesheet" href="/static/admin/css/common.css"/>
+    <!--引入CSS-->
+    <link rel="stylesheet" type="text/css" href="/static/admin/webuploader/webuploader.css">
+    <link rel="stylesheet" href="/static/admin/css/datacenter.css"/>
+    <style>
+        /*#filePicker div:first-child{width:100%!important;height:100%!important;}*/
+        .screenshotlist>div {
+            float: left;
+            margin-right: 24px;
+            position: relative;
+        }
+        .screenshotlist>div>img:last-of-type {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<div class="tqOA">
+
+    <!--内容主体区域-------开始-->
+    <div class="tq-body fl clearfix">
+        <ul id="datanavbar">
+            <li>主页</li>
+            <li class="now">编辑游戏&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now" style="display: none">批量上传&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+        </ul>
+        <!--充值数据---------开始-->
+        <div class="rechargedata" id="rechargedata">
+            <ul>
+                <li class="bline"><span>编辑游戏</span></li>
+                <li><span>批量上传</span></li>
+            </ul>
+
+            <!--C币发放---------开始-->
+            <div class="ccoinprovide addgame" id="ccoinprovide">
+                <form action="{:url('games/updgame')}" method="POST">
+                    <div class="bigbox">
+                            <input type="hidden" name="gameId" value="{$edit.id}">
+                        <span><b>游戏名称</b><input type="text" name="name" value="{$edit.name}"/></span><br>
+                        <span><b>安卓游戏包链接</b><input type="text" name="device_android_url" value="{$edit.device_android_url}" /></span><br>
+                        <span><b>ios游戏包链接</b><input type="text" name="device_ios_url" value="{$edit.device_ios_url}" /></span><br>
+                        <span><b>IOS页面url</b><input required="required" type="text" name="ios_page_url" value="{$edit.ios_page_url}" /></span><br>
+                        <span><b>Android包名</b><input type="text" name="android_mac_id"  value="{$edit.android_mac_id}"/></span><br>
+                        <span><b>IOS包名</b><input type="text" name="ios_mac_id" value="{$edit.ios_mac_id}" /></span><br>
+                        <span><b>bundle ID</b><input type="text" name="ios_bundle_id" value="{$edit.ios_bundle_id}" /></span><br>
+                        <span class="gameclassify">
+                            <b>游戏分类</b>
+                            <select name="parent_cate" id="parent_cate">
+                                {foreach $topCategoryLists as $topCategoryList}
+                                {if condition="$topCategoryList.id == $PCate"}
+                                <option value="{$topCategoryList.id}" selected="selected">{$topCategoryList.cate_name}</option>
+                                {else /}
+                                <option value="{$topCategoryList.id}">{$topCategoryList.cate_name}</option>
+                                {/if}
+                                {/foreach}
+                            </select>
+                            <select name="child_cate" id="child_cate">
+                                {foreach $childCateLists as $childCateList}
+                                {if condition="$childCateList.id == $CCate"}
+                                <option value="{$childCateList.id}" selected="selected">{$childCateList.cate_name}</option>
+                                {else /}
+                                <option value="{$childCateList.id}">{$childCateList.cate_name}</option>
+                                {/if}
+                                {/foreach}
+                            </select>
+                        </span>
+                        <br>
+                        <span><b>游戏标签</b><input type="text" name="tags" value="{$gameTag}"/><i>多个使用','号隔开</i></span>
+                        <br>
+                        <input type="hidden" name="old_tags" value="{$gameTag}">
+                        <span><b>一句话描述</b><input type="text" placeholder="3D仙侠游戏，下载送神秘坐骑" name="advertisement" value="{$edit.advertisement}"/><i>30字以内</i></span><br>
+                        <span class="gamedescribe">
+                            <b>游戏描述</b>
+                            <textarea id="" cols="30" rows="10" name="introduction">{$edit.introduction}</textarea>
+                        </span>
+                        <br>
+                        <span><b>ios包大小</b><input type="text" name="ios_size" value="{$edit.ios_size}" /><i>*数字+单位(K,M,G),例:99M</i></span><br>
+                        <span><b>Android包大小</b><input type="text" name="android_size" value="{$edit.android_size}" /><i>*数字+单位(K,M,G),例:99M</i></span><br>
+                        <span><b>ios游戏版本</b><input type="text" name="ios_version" value="{$edit.ios_version}" /><i></i></span><br>
+                        <span><b>Android游戏版本</b><input type="text" name="android_version" value="{$edit.android_version}" /><i></i></span><br>
+                        <span class="screenshot">
+                            <b>游戏截图</b>
+                            <div id="filePicker">选择文件</div>
+                            <i>*不上传则使用原来图片</i>
+                        </span>
+                        <br>
+                        <div class="screenshotlist" id="fileList">
+                            <div class="flag">
+                                <!-- <i>图片尺寸<br>78*112</i> -->
+                                <!--<img src="img/close_icon.png" alt=""/>-->
+                            </div>
+                        </div>
+                        <span class="gameicon">
+                            <b>游戏ICON</b>
+                            <div id="filePicker1">选择文件</div>
+                            <i>*不上传则使用原来图片</i>
+                        </span>
+                        <br>
+                        <div class="gameiconlist" id="fileList1">
+                            <div class="flag">
+                                <!--<i>图片尺寸<br>512*512</i>-->
+                                <!--<img src="/static/admin/img/close_icon.png" alt=""/>-->
+                            </div>
+                        </div>
+                        <span class="gamebg">
+                            <b>游戏背景图</b>
+                            <div id="filePicker2">选择文件</div>
+                            <i>*不上传则使用原来图片</i>
+                        </span>
+                        <br>
+                        <div class="gamebglist" id="fileList2">
+                            <div class="flag">
+                                <!--<i>图片尺寸<br>512*512</i>-->
+                                <!--<img src="/static/admin/img/close_icon.png" alt=""/>-->
+                            </div>
+                        </div>
+                        <!-- <span><b>游戏ICON</b><input type="text"/></span><br>
+                        <span><b>游戏背景图</b><input type="text"/></span><br> -->
+                        <span><b>排序</b><input type="text" name="sort" value="{$edit.sort}" /><i>数字值越大,排序靠前</i></span><br>
+                        <span><b>评分</b><input type="text" name="score" value="{$edit.score}"/><i>0-10分</i></span><br>
+                        <span><b>下载次数</b><input type="text" name="download" value="{$edit.download}" /></span><br>
+                        <span><b>上线时间</b><input type="date" value="{$edit.c_time}" name="pushTime" /></span><br>
+                        <span class="chose">
+                            <b>是否精选</b>
+                            {foreach $tagsStatusLists as $tagsStatusList}
+                                {if condition="$is_select==$tagsStatusList.tag_name"}
+                                <input name="is_select" type="radio" value="{$tagsStatusList.id}" checked="checked"/>
+                                {else /}
+                                <input name="is_select" type="radio" value="{$tagsStatusList.id}"/>
+                                {/if}
+                            <i>{$tagsStatusList.tag_name}</i>
+                            {/foreach}
+                            <input type="hidden" name="old_select" value="{$is_select}">
+                        </span>
+                        <br>
+                        <span  class="chose">
+                                <b>是否加入首页</b>
+                                {foreach $menus as $menu}
+                                {if condition="$is_menu==$menu.id"}
+                                <input name="is_menu" type="radio" value="{$menu.id}" checked="checked"/>
+                                <i>{$menu.menu_name}</i>
+                                {else /}
+                                <input name="is_menu" type="radio" value="{$menu.id}"/>
+                                <i>{$menu.menu_name}</i>
+                                {/if}
+                                {/foreach}
+                                <input name="is_menu" type="radio" value=""/>
+                                <i>否</i>
+                                <input type="hidden" name="old_menu" value="{$is_menu}">
+                        </span>
+                        <br> 
+                        <span>
+                            <b>是否最新/最热</b>
+                            {foreach $hot_news as $hot_new}
+                            {if condition="$selectHotNew==$hot_new.tag_name"}
+                            <input name="hot_new" type="radio" value="{$hot_new.id}" checked="checked"/>
+                            <i>{$hot_new.tag_name}</i>
+                            {else /}
+                            <input name="hot_new" type="radio" value="{$hot_new.id}"/>
+                            <i>{$hot_new.tag_name}</i>
+                            {/if}
+                            {/foreach}
+                            <input name="hot_new" type="radio" value=""/>
+                            <i>否</i>
+                            <input type="hidden" name="old_hot_new" value="{$selectHotNew}">
+                        </span>
+                    </div>
+                    <input name="extend_pic" type="hidden" id="game_screenshot" value=""/>
+                    <input name="icon" type="hidden" id="icon" value=""/>
+                    <input name="backgroup" type="hidden" id="backgroup" value=""/>
+                    <p><input type="submit" value="保存" class="add"/><input type="reset" value="重置"/></p>
+                </form>
+            </div>
+            <!--C币发放---------end-->
+
+        </div>
+        <!--充值数据---------end-->
+
+    </div>
+    <!--内容主体区域-------end-->
+    <script type="text/javascript" src="/static/admin/jq/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/admin/webuploader/webuploader.js"></script>
+    <!-- <script type="text/javascript" src="/static/admin/js/gamemanage.js"></script> -->
+    <script type="text/javascript" src="/static/lib/uploader.js"></script>
+</div>
+</body>
+<script>
+    
+    $("#parent_cate").change(function(){
+        var id=$("#parent_cate").val();
+
+        $.get("{:url('games/getSceondCategory')}",{'id':id},function(jsonString){
+            var secondCategory = JSON.parse(jsonString);
+            console.log(secondCategory);
+            $("#child_cate option").remove();
+            for(var i=0; i<secondCategory.length; i++){
+                console.log(secondCategory[i]['id']);
+                $("#child_cate").append("<option value='"+secondCategory[i]['id']+"'>"+secondCategory[i]['cate_name']+"</option>");
+            }
+            // $("#child_cate")
+        })
+    })
+
+//游戏截图
+    var uploader3 = new $.uploader({pick:'#filePicker',fileList:'#fileList',itemList:'#game_screenshot'})
+                  .setToken("{$token}").dataToken("{$uploadToken}")
+                  .getInstance();         
+//添加游戏----->游戏icom
+    var uploader1 = new $.uploader({pick:'#filePicker1',fileList:'#fileList1',itemList:'#icon'})
+                .setToken("{$token}").dataToken("{$uploadToken}")
+                .getInstance();
+//添加游戏----->游戏背景图
+    var uploader2 = new $.uploader({pick:'#filePicker2',fileList:'#fileList2',itemList:'#backgroup'})
+                  .setToken("{$token}").dataToken("{$uploadToken}")
+                  .getInstance();    
+    
+</script>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>侧边栏</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/static/admin/css/reset.css"/>
+    <link rel="stylesheet" href="/static/admin/css/common.css"/>
+</head>
+<body>
+    <!--侧边导航栏--------开始-->
+    <div class="sidebar fl clearfix" id="notesidebar">
+        <ul>
+            <li class="menu" id="menu">
+                <img src="/static/admin/img/menu_icon.png" alt=""/>
+            </li>
+            {foreach $powers as $key => $power}
+            {if condition="$key=='/admin/post/post'"}
+            <li>
+                <img src="/static/admin/img/notemanage_icon1.png" alt=""/>
+                <span><a href="{$key}" target="rightFrame">{$power}</a></span>
+            </li>
+            {elseif condition="$key=='/admin/post/add'"/}
+            <li>
+                <img src="/static/admin/img/notemanage_icon2.png" alt=""/>
+                <span><a href="{$key}" target="rightFrame">{$power}</a></span>
+            </li>
+            {elseif condition="$key=='/admin/post/wordList'"/}
+            <li>
+                <img src="/static/admin/img/notemanage_icon3.png" alt=""/>
+                <span><a href="{$key}" target="rightFrame">{$power}</a></span>
+            </li>
+            {/if}
+            {/foreach}
+        </ul>
+    </div>
+    <!--侧边导航栏--------end-->
+    <script type="text/javascript" src="/static/admin/jq/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/left.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>编辑礼包</title>
+    <link rel="stylesheet" href="__CSS__reset.css"/>
+    <link rel="stylesheet" href="__CSS__common.css"/>
+    <link rel="stylesheet" href="__CSS__datacenter.css"/>
+</head>
+<body>
+<div class="tqOA">
+
+    <!--内容主体区域-------开始-->
+    <div class="tq-body fl clearfix">
+        <ul id="datanavbar">
+            <li>主页</li>
+            <li class="now" style="display: none">用户管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now">礼包管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now" style="display: none">充值数据&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now" style="display: none">消费数据&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+        </ul>
+
+        <!--礼包管理----------开始-->
+        <div class="gamelist" id="gamelist">
+
+            <!--添加礼包---------开始-->
+            <div class="addgift" id="addgift">
+                <form method="post" action="{:url('data/editGiftData')}">
+                    <input type="hidden" name="id" value="{$lists.id}">
+                    <span>
+                    <b>所在游戏</b>
+                        <select name="game" id="">
+                            <option value="">选择游戏</option>
+                            {foreach $game as $games}
+                            {if condition="$lists.app_id==$games.id"}
+                            <option value="{$games.id}" selected="selected">{$games.name}</option>
+                            {else /}
+                            <option value="{$games.id}">{$games.name}</option>
+                            {/if}
+                            {/foreach}
+                        </select>
+                    </span>
+                    <br>
+                    <span>
+                        <b>礼包类型</b>
+                        <select name="type" id="">
+                            <option value="">选择类型</option>
+                            {foreach $giftlist as $glist}
+                            {if condition="$lists.type==$glist.id"}
+                            <option value="{$glist.id}" selected>{$glist.value}</option>
+                            {else /}
+                            <option value="{$glist.id}">{$glist.value}</option>
+                            {/if}
+                            {/foreach}
+                        </select>
+                    </span>
+                    <br>
+                        <span>
+                            <b>礼包标题</b>
+                            <input type="text" name="title" required="required" value="{$lists.title}" placeholder="请输入标题"/>
+                        </span>
+                    <br>
+                        <span>
+                            <b>礼包码</b>
+                            <input type="text" required="required" value="{$code}" name="code" disabled/>
+                        </span>
+                    <br>
+                        <span>
+                            <b>礼包内容</b>
+                            <textarea name="content" id="" cols="30" rows="10">{$lists.content}</textarea>
+                        </span>
+                    <br>
+                        <span>
+                            <b>使用说明</b>
+                            <textarea name="directions" id="" cols="30" rows="10">{$lists.directions}</textarea>
+                        </span>
+                    <br>
+                        <span>
+                            <b>兑换期限</b>
+                            <input type="date" name="start_time" value="{$lists.start_time|date='Y-m-d',###}"/>
+                            <i>至</i>
+                            <input type="date" name="end_time" value="{$lists.end_time|date='Y-m-d',###}"/>
+                        </span>
+                    <br>
+                    <p>
+                        <input type="submit" value="修改" class="on">
+                        <a href="{:url('data/gift')}">取消</a>
+                    </p>
+                </form>
+            </div>
+            <!--添加礼包---------end-->
+        </div>
+        <!--礼包管理----------end-->
+    </div>
+    <!--内容主体区域-------end-->
+</div>
+</body>
+</html>

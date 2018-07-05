@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>充值汇总</title>
+    <link rel="stylesheet" href="/static/admin/css/reset.css"/>
+    <link rel="stylesheet" href="/static/admin/css/common.css"/>
+    <link rel="stylesheet" href="/static/admin/css/datacenter.css"/>
+</head>
+<style>
+    .page{
+        position: fixed;
+        bottom: 30px;
+    }
+     .page input[type=text]{
+        border: 1px solid #666;
+        height: 18px;
+        margin: 0 10px;
+        text-align: center;
+    }
+    .page input[type=submit]{
+        width: 50px;
+        margin-left: 10px;
+        height: 24px;
+        background: #1abca3;
+        text-align: center;
+        color: #fff;
+        line-height: 24px;
+    }
+    div.page a {
+        border: #aaaadd 1px solid;
+        text-decoration: none;
+        padding: 3px 12px;
+        margin: 2px;
+    }
+
+    div.page span.current {
+        border: #1abca3 1px solid;
+        background-color: #1abca3;
+        padding: 3px 12px;
+        margin: 2px;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    div.page span.disable {
+        border: #eee 1px solid;
+        padding: 2px 5px 2px 5px;
+        margin: 2px;
+        color: #ddd;
+    }
+
+    div.page form {
+        display: inline;
+    }
+</style>
+<body>
+    <div class="tqOA">
+
+    <!--内容主体区域-------开始-->
+    <div class="tq-body fl clearfix">
+        <ul id="datanavbar">
+            <li>主页</li>
+            <li class="now" style="display: none">用户管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now" style="display: none">礼包管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now" style="display: none">充值数据&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now" style="display: none">消费数据&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now">充值汇总&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+        </ul>
+
+        <!--内容主体区域-------开始-->
+        <div class="tq-body fl clearfix">
+            <ul id="datanavbar" style="display: none">
+                <li>主页</li>
+                <li class="now" style="display: none">用户管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+                <li class="now" style="display: none">礼包管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+                <li class="now" style="display: none">充值数据&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+                <li class="now" style="display: none">消费数据&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+                <li class="now" style="display: none">充值汇总&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            </ul>
+
+            <!--充值数据---------开始-->
+            <div class="rechargedata" id="rechargedata">
+                
+                <!--小充值数据---------开始-->
+                <div class="srecharge" id="srecharge">
+                    <form action="{:url('data/rechargeSum')}" method="POST">
+                        <span>
+                            <b>月份</b>
+                            <select name="monthKey" id="">
+                                <option value="">请选择</option>
+                                {foreach $monthLists as $key=>$monthList}
+                                {if condition="$monthKey==$key"}
+                                <option value="{$key}" selected="selected">{$monthList}</option>
+                                {else /}
+                                <option value="{$key}">{$monthList}</option>
+                                {/if}
+                                {/foreach}
+                            </select>
+                        </span>
+                        <input type="submit" value="搜索"/>
+                    </form>
+
+                    <table cellspacing="0">
+                        <thead class="tthead">
+                        <tr>
+                            <th>日期（需要显示一个月）</th>
+                            <th>充值金额</th>
+                            <th>充值C币</th>
+                            <th>总c币量</th>
+                            <th>充值人数</th>
+                            <th>付费率</th>
+                            <th>日ARPU</th>
+                            <th>付费ARPU</th>
+                        </tr>
+                        </thead>
+                        <tbody class="ttbody">
+                        {foreach $lists as $list}
+                        <tr>
+                            <td>{$list.date}</td>
+                            <td>{$list.sum_money}</td>
+                            <td>{$list.sum_ptb}</td>
+                            <td>{$list.total_ptb}</td>
+                            <td>{$list.pay_user}</td>
+                            <td>{$list.pay_rate}</td>
+                            <td>{$list.day_arpu}</td>
+                            <td>{$list.pay_arpu}</td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+
+                    {$page_list}
+
+                    <!-- <div class="pagination">
+                        <span>&lt;</span>
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                        <span>&gt;</span>
+                        <div class="skip">
+                            <i>跳到</i>
+                            <input type="text" value="3"/>
+                            <i>页</i>
+                            <input type="button" value="确定"/>
+                            <i>共10页</i>
+                        </div>
+                        <select name="" id="">
+                            <option value="">10条/页</option>
+                            <option value="">30条/页</option>
+                            <option value="">60条/页</option>
+                            <option value="">100条/页</option>
+                        </select>
+                    </div> -->
+                </div>
+                <!--小充值数据---------end-->
+
+            </div>
+            <!--充值数据---------end-->
+
+        </div>
+        <!--内容主体区域-------end-->
+
+
+    </div>
+    <!--内容主体区域-------end-->
+</div>
+</body>
+</html>

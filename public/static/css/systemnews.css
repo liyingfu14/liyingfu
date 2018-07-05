@@ -1,0 +1,152 @@
+/*systemnews.css*/
+/*发布消息---------------开始*/
+    .addgame>form {
+        padding-left: 20px;
+    }
+    .addgame>form>span {
+        width: auto;
+        height: 38px;
+        line-height: 38px;
+        display: inline-block;
+        color: #222;
+        margin-bottom: 17px;
+        border: none;
+    }
+    .addgame>form>span:last-of-type {
+        height: 200px;
+    }
+    .addgame>form>span>b {
+        width: 110px;
+        height: 36px;
+        line-height: 36px;
+        display: inline-block;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #e6e6e6;
+        float: left;
+    }
+    .addgame>form>span:last-of-type>b {
+        height: 200px;
+        line-height: 200px;
+    }
+    .addgame>form>span:last-of-type>textarea {
+        width: 840px;
+        height: 200px;
+        border-color: #e6e6e6;
+    }
+    .addgame>form>span:first-of-type>select,
+    .addgame>form>span:nth-of-type(3)>select {
+        width: 128px;
+        height: 38px;
+        line-height: 38px;
+        border: 1px solid #e6e6e6;
+        border-left: none;
+        float: left;
+        padding-left: 20px;
+        font-size: 14px;
+        color: #555;
+    }
+    .addgame>form>span>input {
+        width: 235px;
+        height: 36px;
+        line-height: 36px;
+        display: inline-block;
+        padding-left: 15px;
+        font-size: 14px;
+        border: 1px solid #e6e6e6;
+        margin-left: -1px;
+    }
+    .addgame>form>p {
+        width: auto;
+        height: 48px;
+        margin-top: 50px;
+    }
+    .addgame>form>p>input {
+        width: 100px;
+        height: 48px;
+        display: inline-block;
+        font-size: 14px;
+        color: #222;
+        border: 1px solid #e6e6e6;
+        border-radius: 4px;
+        margin-right: 23px;
+        background-color: #f8f8f8;
+        cursor: pointer;
+    }
+    .addgame>form>p>input.add {
+        background-color: #1abca3;
+        color: #fff;
+    }
+/*发布消息---------------end*/
+
+/*消息列表---------------开始*/
+    .gamelist {
+        padding: 0 20px;
+    }
+    .gamelist>table {
+        width: 100%;
+        height: auto;
+        border: 1px solid #e6e6e6;
+    }
+    .tthead {
+        background-color: #f8f8f8;
+    }
+    .tthead>tr {
+        width: auto;
+        height: 60px;
+        border: 1px solid #e6e6e6;
+    }
+    .tthead>tr>th {
+        border: 1px solid #e6e6e6;
+        font-size: 14px;
+        color: #222;
+    }
+    .tthead>tr>th:last-of-type {
+        width: 380px;
+    }
+    .tthead>tr>th:nth-of-type(1)>i {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        border: 1px solid #e6e6e6;
+        font-size: 14px;
+        color: #222;
+    }
+    .ttbody>tr {
+        height: 80px;
+    }
+    .ttbody>tr>td {
+        border: 1px solid #e6e6e6;
+        text-align: center;
+        line-height: 50px;
+        font-size: 14px;
+        color: #555;
+    }
+    .ttbody>tr:first-of-type>td:nth-of-type(4) {
+        color: #1abca3;
+    }
+    .ttbody>tr:nth-of-type(2)>td:nth-last-of-type(2) {
+        color: #1abca3;
+    }
+    .ttbody>tr>td:last-of-type>button {
+        width: 80px;
+        height: 34px;
+        display: inline-block;
+        color: #fff;
+        cursor: pointer;
+        background-color: #1abca3;
+        border: 1px solid #e6e6e6;
+        border-radius: 4px;
+    }
+    .ttbody>tr>td:last-of-type>button:nth-of-type(2) {
+        background-color: #ee5f48;
+        margin: 0 20px;
+    }
+    .ttbody>tr>td:last-of-type>button:last-of-type {
+        background-color: #e05656;
+    }
+    .pagination>span:nth-of-type(3), .pagination>span:nth-of-type(4) {
+        background-color: #f8f8f8;
+        color: #222;
+    }
+/*轮播图管理---------------end*/

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" href="__CSS__reset.css"/>
+    <link rel="stylesheet" href="__CSS__common.css"/>
+    <link rel="stylesheet" href="__CSS__datacenter.css"/>
+</head>
+<style>
+    .page{
+        position: fixed;
+        bottom: 30px;
+    }
+     .page input[type=text]{
+        border: 1px solid #666;
+        height: 18px;
+        margin: 0 10px;
+        text-align: center;
+    }
+    .page input[type=submit]{
+        width: 50px;
+        margin-left: 10px;
+        height: 24px;
+        background: #1abca3;
+        text-align: center;
+        color: #fff;
+        line-height: 24px;
+    }
+    div.page a {
+        border: #aaaadd 1px solid;
+        text-decoration: none;
+        padding: 3px 12px;
+        margin: 2px;
+    }
+
+    div.page span.current {
+        border: #1abca3 1px solid;
+        background-color: #1abca3;
+        padding: 3px 12px;
+        margin: 2px;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    div.page span.disable {
+        border: #eee 1px solid;
+        padding: 3px 12px;
+        margin: 2px;
+        color: #ddd;
+    }
+
+    div.page form {
+        display: inline;
+    }
+</style>
+<body>
+    <div class="tqOA">
+
+    <!--内容主体区域-------开始-->
+    <div class="tq-body fl clearfix">
+        <ul id="datanavbar">
+            <li>主页</li>
+            <li class="now">用户管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now" style="display: none">礼包管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now" style="display: none">充值数据&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now" style="display: none">消费数据&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+        </ul>
+        <div class="rechargedata" id="rechargedata">
+            <ul>
+                <li class="bline"><span>用户管理</span></li>
+                <li><span><a href="{:url('data/userdata')}">用户数据</a></span></li>
+            </ul>
+        <!--用户管理----------开始-->
+        <div class="usermanage" id="usermanage">
+            <form action="">
+                   <span class="posttime">
+                        <b>注册时间</b>
+                        <input type="date" name="start_time" value="{$start_time}"/>
+                        <i>至</i>
+                        <input type="date" name="end_time" value="{$end_time}"/>
+                    </span>
+                    <span>
+                        <b>玩家账号</b>
+                        <input type="text" name="username" value="{$username}" placeholder="请输入玩家账号"/>
+                    </span>
+                    <span>
+                        <b>玩家昵称</b>
+                        <input type="text" name="nickname" value="{$nickname}" placeholder="请输入玩家昵称"/>
+                    </span>
+                <input type="submit" value="搜索"/>
+            </form>
+
+            <table cellspacing="0">
+                <thead class="tthead">
+                <tr>
+                    <th>玩家ID</th>
+                    <th>账号</th>
+                    <th>昵称</th>
+                    <th>注册时间</th>
+                    <th>注册设备</th>
+                    <th>IMEI码</th>
+                    <th>C币余额</th>
+                    <th>等级</th>
+                    <th>实名验证</th>
+                    <th>绑定手机号</th>
+                    <th>登录IP</th>
+                    <th>状态</th>
+                    <th>最近登录时间</th>
+                    <th>管理操作</th>
+                </tr>
+                </thead>
+                <tbody class="ttbody">
+                {foreach $lists as $list}
+                <tr>
+                    <td>{$list.id}</td>
+                    <td>{$list.username}</td>
+                    <td>{$list.nickname}</td>
+                    <td>{$list.create_at|date="Y-m-d H:s",###}</td>
+                    <td>{$list.from}</td>
+                    <td>{$list.imei}</td>
+                    <td>{$list.remain}</td>
+                    <td>{$list.name}</td>
+                    <td>{$list.idcard}</td>
+                    <td>{$list.mobile}</td>
+                    <td>{$list.last_login_ip}</td>
+                    {if condition="$list.status=='冻结'"}
+                    <td style="color: firebrick">{$list.status}</td>
+                    {else /}
+                    <td style="color: #1ab395">{$list.status}</td>
+                    {/if}
+                    <td>{$list.last_login_at|date="Y-m-d H:s",###}</td>
+                    <td>
+                        {foreach $powers as $key=>$power}
+                        <!-- <button><a href="{:url('data/editUser')}?id={$list.id}">修改</a></button> -->
+                        {if condition="($key=='/admin/data/ban') AND ($list.status=='冻结')" /}
+                        <button style="background:#ff6600"><a href="{$key}?id={$list.id}">解冻</a></button>
+                        {elseif condition="($key=='/admin/data/ban') AND ($list.status=='正常')" /}
+                        <button style="background: #ff0000"><a href="{$key}?id={$list.id}">冻结</a></button>
+                        {elseif condition="$key=='/admin/data/edituser'" /}
+                        <button><a href="{$key}?id={$list.id}">修改</a></button>
+                        {/if}
+                        {/foreach}
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            {$page_list}
+            <div class="page">
+                
+            </div>
+        </div>
+        <!--用户管理----------end-->
+        </div>
+    </div>
+    <!--内容主体区域-------end-->
+        <script src="/static/jq/jquery.min.js"></script>
+        <script src="/static/js/datacenter.js"></script>
+</div>
+</body>
+</html>
