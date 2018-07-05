@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>C币发放</title>
+    <link rel="stylesheet" href="/static/admin/css/reset.css"/>
+    <link rel="stylesheet" href="/static/admin/css/common.css"/>
+    <link rel="stylesheet" href="/static/admin/css/datacenter.css"/>
+</head>
+<body>
+    <div class="tqOA">
+
+    <!--内容主体区域-------开始-->
+    <div class="tq-body fl clearfix">
+        <ul id="datanavbar">
+            <li>主页</li>
+            <li class="now" style="display: none">用户管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now" style="display: none">礼包管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now">充值数据&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            <li class="now" style="display: none">消费数据&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+        </ul>
+
+        <!--内容主体区域-------开始-->
+        <div class="tq-body fl clearfix">
+            <ul id="datanavbar" style="display: none">
+                <li>主页</li>
+                <li class="now" style="display: none">用户管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+                <li class="now" style="display: none">礼包管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+                <li class="now" style="display: none">充值数据&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+                <li class="now" style="display: none">消费数据&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+            </ul>
+
+            <!--充值数据---------开始-->
+            <div class="rechargedata" id="rechargedata">
+                <ul>
+                    <li><span><a href="{:url('data/rechargeData')}">C币充值</a></span></li>
+                    <li><span><a href="{:url('data/ptbAdministration')}">C币管理</a></span></li>
+                    <li class="bline"><span>C币发放</span></li>
+                </ul>
+
+                <!--C币发放---------开始-->
+                <div class="ccoinprovide" id="ccoinprovide">
+                    <form action="{:url('data/ptbGrant')}" method="POST">
+                        <span><b>账号类型</b>
+                            <input type="radio" checked="checked" name="player" value="0" id="cont-add"/><i>充值玩家</i>
+                            <input type="radio" name="player" value="1" id="cont-del"/><i>扣除C币</i>
+                        </span><br>
+                        <span><b>玩家账号</b><input type="text" value="" name="username"/></span><br>
+                        <span><b>已有C币数量</b><input type="text" value="" name="remain"/></span><br>
+                        <span>
+                            <b class="cont-add">请输入充值C币数量</b>
+                            <b class="cont-del" style="display: none">请输入扣除C币数量</b>
+                            <input type="text" name="grant"/>
+                        </span><br>
+                        <span>
+                            <b class="cont-add">请确认充值C币数量</b>
+                            <b class="cont-del" style="display: none">请确认扣除C币数量</b>
+                            <input type="text" name="regrant"/>
+                        </span><br>
+                        <span>
+                            <b class="cont-add">填写备注</b>
+                            <b class="cont-del" style="display: none">扣除原因</b>
+                            <input type="text" name="desc"/>
+                        </span><br>
+                        <span><b>请输入二级密码</b><input type="text" name="secondpwd"/></span><br>
+                        <p><input type="submit" value="充值" class="add"/><input type="reset" value="重置"/></p>
+                    </form>
+                </div>
+                <!--C币发放---------end-->
+
+            </div>
+            <!--充值数据---------end-->
+        </div>
+        <!--内容主体区域-------end-->
+
+
+    </div>
+    <!--内容主体区域-------end-->
+</div>
+</body>
+<!-- <script src="static/adimin/jq/jquery.min.js"></script> -->
+<script>
+    var add = document.querySelector("#cont-add");
+    var del = document.querySelector("#cont-del");
+    var contadd = document.querySelectorAll(".cont-add");
+    var contdel = document.querySelectorAll(".cont-del");
+    var btn = document.querySelector(".add");
+    var check = 0;
+
+    add.onclick = function(){
+        check = this.getAttribute("value");
+        for(var i = 0;i<contdel.length;i++){
+            // console.log(contdel[i]);
+            contdel[i].style.display = "none";
+            contadd[i].style.display = "inline-block";
+        }
+        btn.setAttribute("value","充值");
+        console.log(check);
+    }
+
+    del.onclick = function(){
+        check = this.getAttribute("value");
+        for(var i = 0;i<contdel.length;i++){
+            // console.log(contdel[i]);
+            contdel[i].style.display = "inline-block";
+            contadd[i].style.display = "none";
+        }
+        btn.setAttribute("value","扣除");
+        console.log(check);
+    }
+    
+</script>
+</html>

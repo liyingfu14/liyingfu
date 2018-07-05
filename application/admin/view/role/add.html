@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>添加角色弹出</title>
+    <link rel="stylesheet" href="/static/admin/css/reset.css"/>
+    <link rel="stylesheet" href="/static/admin/css/common.css"/>
+    <link rel="stylesheet" href="/static/admin/css/setup.css"/>
+</head>
+<style>
+    .sec{
+        float: left;
+        padding: 11px;
+        margin-bottom: 0px;
+    }
+    .third{
+        float:right;
+        margin-left: 18px;
+        margin-right: 233px;
+        margin-bottom: 8px;
+    }
+    .third li{
+        margin-bottom: 5px;
+    }
+    .table tr th{
+        width: 150px;
+        height: 60px;
+    }
+</style>
+<body>
+<div class="tqOA">
+    <!--内容主体区域-------开始-->
+    <div class="tq-body fl clearfix">
+        <ul id="setnavbar">
+            <li>主页</li>
+            <li class="now">管理员管理&nbsp;&nbsp;&nbsp;&nbsp;<i>&Chi;</i></li>
+        </ul>
+
+        <!--添加管理员---------开始-->
+        <div class="addgift addrole">
+            <h2>添加角色</h2>
+
+            <form action="{:url('admin/roles/add')}" method="POST">
+                <span>
+                            <b>角色名称</b>
+                            <input type="text" name="role_name"/>
+                        </span>
+                <br>
+                        <!-- <span>
+                            <b>备注</b>
+                            <input type="text"/>
+                        </span>
+                <br> -->
+
+                <div class="power">
+                    <b>权限</b>
+                    <table width="600px" border="1px" rules="all">
+                        {foreach $permissionList as $permission}
+                        <tr>
+                            <th width="150" height="60"><input onclick="all_select(this)" type='checkbox' name="checkbox[]" value="{$permission.id}" />{$permission.title} 1</th>
+                            <td>
+                                {foreach $permission.child as $permission2}
+                                <ul class="sec">
+                                    <b style="display: inline-block;width: 90px;"><input onclick="all_select(this);up_select(this,'{$permission.id}');" type='checkbox' name="checkbox[]" value="{$permission2.id}" />{$permission2.title} 2</b>
+                                    <ul class="third">
+                                        {foreach $permission2.child as $permission3}
+                                        <li><input onclick="up_select(this,'{$permission2.id},{$permission.id}')" type='checkbox' name="checkbox[]" value="{$permission3.id}" />{$permission3.title} 3</li>
+                                        {/foreach}
+                                    </ul>
+                                </ul>
+                                {/foreach}
+                            </td>
+                        </tr>
+                        {/foreach}
+                    </table>
+                </div>
+                <br>
+                <p>
+                    <input type="submit" id="add" value="保存" class="on">
+                </p>
+            </form>
+        </div>
+        <!--添加管理员---------end-->
+    </div>
+    <!--内容主体区域-------end-->
+</div>
+<script src="/static/admin/jq/jquery.min.js"></script>
+</body>
+<script>
+    function all_select(obj){
+        $(obj).parent().next().find("input[type='checkbox']").prop('checked',obj.checked);
+    }
+
+    function up_select(obj,ids){
+        var arr = ids.split(','); 
+        for(var k in arr){
+            $('input[value='+arr[k]+']').prop('checked',true);
+        }
+       
+        var length = $(obj).parents("td").find("input[type=checkbox]:checked").length;
+        if(length == 0){
+            $(obj).parents("tr").find("th > input").prop('checked',false);
+        }
+    }
+</script>
+</html>
